@@ -13,40 +13,33 @@
     <div
       class="sidebar-mask"
       @click="toggleSidebar(false)"
-    ></div>
+    />
 
-    <Home v-if="$page.frontmatter.home"/>
+    <Sidebar
+      :items="sidebarItems"
+      @toggle-sidebar="toggleSidebar"
+    >
+      <template #top>
+        <slot name="sidebar-top" />
+      </template>
+      <template #bottom>
+        <slot name="sidebar-bottom" />
+      </template>
+    </Sidebar>
 
-    <div v-else class="docs-layout">
+    <Home v-if="$page.frontmatter.home" />
 
-      <Sidebar
-        :items="sidebarItems"
-        @toggle-sidebar="toggleSidebar"
-      >
-        <slot
-          name="sidebar-top"
-          slot="top"
-        />
-        <slot
-          name="sidebar-bottom"
-          slot="bottom"
-        />
-      </Sidebar>
-
-      <Page
-        :sidebar-items="sidebarItems"
-      >
-        <slot
-          name="page-top"
-          slot="top"
-        />
-        <slot
-          name="page-bottom"
-          slot="bottom"
-        />
-      </Page>
-    </div>
-
+    <Page
+      v-else
+      :sidebar-items="sidebarItems"
+    >
+      <template #top>
+        <slot name="page-top" />
+      </template>
+      <template #bottom>
+        <slot name="page-bottom" />
+      </template>
+    </Page>
   </div>
 </template>
 
@@ -58,7 +51,14 @@ import Sidebar from '@theme/components/Sidebar.vue'
 import { resolveSidebarItems } from '../util'
 
 export default {
-  components: { Home, Page, Sidebar, Navbar },
+  name: 'Layout',
+
+  components: {
+    Home,
+    Page,
+    Sidebar,
+    Navbar
+  },
 
   data () {
     return {
@@ -149,11 +149,3 @@ export default {
   }
 }
 </script>
-
-<style src="prismjs/themes/prism-tomorrow.css"></style>
-
-<style lang="stylus">
-.docs-layout
-  max-width: 1200px
-  margin: 0 auto
-</style>
