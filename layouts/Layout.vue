@@ -14,6 +14,8 @@
       class="sidebar-mask"
       @click="toggleSidebar(false)"
     />
+    
+    <div class="docs-layout">
 
     <Sidebar
       :items="sidebarItems"
@@ -40,6 +42,7 @@
         <slot name="page-bottom" />
       </template>
     </Page>
+  </div>
   </div>
 </template>
 
@@ -149,3 +152,11 @@ export default {
   }
 }
 </script>
+
+<style src="prismjs/themes/prism-tomorrow.css"></style>
+
+<style lang="stylus">
+.docs-layout
+  max-width: 1200px
+  margin: 0 auto
+</style>
